@@ -1,0 +1,513 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>UIFoundry — Design Token Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Vazirmatn:wght@100..900&family=Markazi+Text:wght@400..700&family=Mirza:wght@400;500;600;700&family=Lalezar&family=Reem+Kufi:wght@400..700&family=Scheherazade+New:wght@400..700&family=Katibeh&family=Inter:wght@300..800&family=Playfair+Display:wght@400..800&family=Source+Serif+4:wght@400..700&family=Cormorant+Garamond:wght@300;400;500;600;700&family=EB+Garamond:wght@400..700&family=Fraunces:wght@300..700&family=Work+Sans:wght@400..700&family=Orbitron:wght@400..800&family=Rajdhani:wght@300;400;500;600;700&family=Nunito:wght@400..800&family=Nunito+Sans:wght@400..800&family=Poppins:wght@300;400;500;600;700&family=Merriweather:wght@400;700&family=PT+Serif:wght@400;700&family=Yeseva+One&family=Mulish:wght@400..800&family=Space+Grotesk:wght@400..700&family=DM+Sans:wght@400..700&family=JetBrains+Mono:wght@400;500;600&family=Space+Mono:wght@400;700&family=IBM+Plex+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<script>
+  /* زبان رابط پیش از اولین رنگ‌آمیزی: متن ایستای HTML فارسی است؛ برای زبان انگلیسی تا پایان ترجمه پنهان می‌ماند (حداکثر ۲ ثانیه). همان سیاست src/i18n/index.js */
+  (function(){ try{
+    var s = localStorage.getItem('uifoundry:uiLang'), l = (navigator.languages && navigator.languages[0]) || navigator.language || '';
+    var lang = (s === 'en' || s === 'fa') ? s : (/^fa(\b|-)/i.test(l) ? 'fa' : 'en');
+    if(lang === 'en'){ var h = document.documentElement; h.setAttribute('lang','en'); h.setAttribute('dir','ltr'); h.classList.add('i18n-pending'); setTimeout(function(){ h.classList.remove('i18n-pending'); }, 2000); }
+  }catch(e){} })();
+</script>
+  <script type="module" crossorigin src="./assets/index-CPuboqCe.js"></script>
+  <link rel="stylesheet" crossorigin href="./assets/index-qh_0K3le.css">
+</head>
+<body>
+
+<div class="app" id="app">
+
+  <!-- پس‌زمینه‌ی تیره پشت Drawer موبایل (فقط زیر 900px فعال می‌شود؛ کلیک روی آن منو را می‌بندد) -->
+  <div class="nav-backdrop" id="navBackdrop" aria-hidden="true"></div>
+
+  <!-- ============ Sidebar (ناوبری اصلی، سمت راست؛ روی موبایل Drawer است) ============ -->
+  <aside class="sidebar" id="sidebar" aria-label="ناوبری اصلی">
+    <div class="brand">
+      <div class="brand-mark">UF</div>
+      <div class="brand-text">
+        <h1>UIFoundry</h1>
+        <p>Design Token Studio</p>
+      </div>
+      <button type="button" class="drawer-close" id="navClose" aria-label="بستن منو">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="ui-lang" role="group" aria-label="زبان رابط ابزار" title="زبان رابط ابزار">
+      <span class="ui-lang-icon" aria-hidden="true">🌐</span>
+      <button type="button" id="uiLangFa" data-ui-lang="fa" class="active" aria-pressed="true">فارسی</button>
+      <button type="button" id="uiLangEn" data-ui-lang="en" aria-pressed="false">English</button>
+    </div>
+
+    <nav class="nav">
+      <button class="nav-item active" data-panel="styles">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>
+        سبک‌ها و توکن‌ها
+      </button>
+      <button class="nav-item" data-panel="colors">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="8" r="1.4" fill="currentColor" stroke="none"/><circle cx="8.5" cy="13" r="1.4" fill="currentColor" stroke="none"/><circle cx="15.5" cy="13" r="1.4" fill="currentColor" stroke="none"/></svg>
+        رنگ‌بندی
+      </button>
+      <button class="nav-item" data-panel="export">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><polyline points="8 9 4 12 8 15"/><polyline points="16 9 20 12 16 15"/></svg>
+        خروجی توکن‌ها
+      </button>
+      <button class="nav-item" data-panel="project">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 4h12l4 4v12H4z"/><path d="M8 4v6h8V4"/><rect x="8" y="14" width="8" height="6"/></svg>
+        پروژه و تحویل
+      </button>
+      <button class="nav-item" data-panel="preview">
+        <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7-10-7-10-7z"/><circle cx="12" cy="12" r="3"/></svg>
+        پیش‌نمایش زنده سایت
+        <span class="badge-soon">به‌زودی</span>
+      </button>
+    </nav>
+
+  </aside>
+
+  <!-- ============ Main ============ -->
+  <main class="main">
+    <div class="topbar">
+      <button type="button" class="nav-toggle" id="navToggle" aria-label="باز کردن منو" aria-controls="sidebar" aria-expanded="false">
+        <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 7h16M4 12h16M4 17h16"/></svg>
+      </button>
+      <div class="topbar-title">
+        <h2 id="topbarTitle">سبک‌ها و توکن‌ها</h2>
+        <p id="topbarDesc">یک سبک را انتخاب کنید، سپس از نوار کناری چپ هر گروه از متغیرهای CSS را ویرایش کنید</p>
+      </div>
+      <div class="topbar-right">
+        <div class="history-buttons">
+          <button id="btnUndo" class="icon-btn" aria-label="واگرد" disabled>↺</button>
+          <button id="btnRedo" class="icon-btn" aria-label="ازنو" disabled>↻</button>
+          <button id="btnShortcuts" class="icon-btn" aria-label="کلیدهای میانبر">⌨</button>
+        </div>
+        <div class="save-status"><span class="save-dot" id="saveDot"></span><span id="saveText">تغییرات به‌صورت خودکار ذخیره می‌شود</span></div>
+        <div class="theme-toggle">
+          <button id="themeLight" class="active" data-theme="light">☀ روشن</button>
+          <button id="themeDark" data-theme="dark">🌙 تیره</button>
+        </div>
+        <div class="lang-toggle" role="group" aria-label="زبان پیش‌نمایش سایت" title="زبان پیش‌نمایش سایت">
+          <span class="lang-toggle-label">پیش‌نمایش:</span>
+          <button id="langFa" class="active" data-lang="fa">فارسی</button>
+          <button id="langEn" data-lang="en">English</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="content-wrapper">
+
+      <!-- ===================== PANEL 1: STYLES + TOKENS (studio layout) ===================== -->
+      <section class="panel panel-studio active" id="panel-styles">
+        <div class="studio">
+
+          <!-- ---- Inspector: کنترل‌های دسته‌ی فعال، عمودی، سمت راست (کنار نوار کناری اصلی) ---- -->
+          <aside class="inspector-panel" id="inspectorPanel">
+            <!-- محتوای این پنل را src/ui/toolbar.js از روی data/tokens.js می‌سازد (buildTokenGroupsUI) -->
+          </aside>
+
+          <!-- ---- ناحیه‌ی اصلی: نوار انتخاب سبک زیر هدر + بوم پیش‌نمایش همیشه‌قابل‌مشاهده ---- -->
+          <div class="studio-body">
+
+            <!-- Style bar: فقط انتخاب سبک/Preset — کنترل‌های توکن دیگر اینجا نیستند، در Inspector سمت راست‌اند -->
+            <div class="style-bar">
+              <button type="button" class="current-style-pill" id="currentStylePill" aria-haspopup="dialog" aria-expanded="false">🚀 استارتاپی / SaaS ▾</button>
+              <div class="style-tools">
+                <button type="button" class="icon-btn" id="btnStyleSearch" aria-label="جستجوی سبک">🔍</button>
+                <button type="button" class="icon-btn" id="btnStyleDuplicate" aria-label="Duplicate Style">⧉</button>
+                <button type="button" class="icon-btn" id="btnStyleNew" aria-label="ساخت سبک جدید">＋</button>
+              </div>
+              <div class="strip-divider"></div>
+              <div class="chip-row" id="styleChipRow"></div>
+            </div>
+
+            <!-- بوم: پیش‌نمایش همیشه در دید، بدون نیاز به اسکرول -->
+            <div class="canvas-area" id="canvasArea">
+              <!-- Viewport: دیگر overflow:auto نیست؛ Zoom/Pan با src/ui/canvas-view.js -->
+              <div class="canvas-viewport" id="canvasViewport" tabindex="0"
+                   aria-label="بوم پیش‌نمایش — کشیدن: جابه‌جایی · Ctrl+چرخ ماوس: زوم · کلیدهای + − 0 (Fit) و 1 (100%)">
+                <div class="canvas-stage" id="canvasStage">
+                  <div class="device-frame" id="deviceFrame" data-i18n-skip><div class="device-content">
+              <div class="gallery" id="componentGallery">
+
+                <section class="demo-block demo-block-wide">
+                  <div class="demo-label">Navbar</div>
+                  <nav class="demo-navbar" id="demoNavbar">
+                    <span class="demo-navbar-brand" id="demoNavbarBrand">Brand</span>
+                    <span class="demo-navbar-links" id="demoNavbarLinks"></span>
+                  </nav>
+                </section>
+
+                <section class="demo-block demo-block-wide">
+                  <div class="demo-label" id="typographyLabel">تایپوگرافی</div>
+                  <div class="preview-box" id="previewBox">
+                    <h1 class="preview-h1" id="previewH1">عنوان نمونه برای پیش‌نمایش</h1>
+                    <p class="preview-p" id="previewP">این یک متن نمونه برای بررسی خوانایی، ارتفاع خط و فاصله‌گذاری بر اساس سبک انتخابی شماست.</p>
+                    <code class="preview-mono" id="previewMono">--font-family-mono</code>
+                  </div>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="buttonLabel">دکمه (Button)</div>
+                  <div class="demo-buttons">
+                    <button class="demo-btn demo-btn-primary" id="previewBtn">اصلی</button>
+                    <button class="demo-btn demo-btn-secondary" id="demoBtnSecondary">ثانویه</button>
+                    <button class="demo-btn demo-btn-outline" id="demoBtnOutline">حاشیه‌دار</button>
+                    <button class="demo-btn demo-btn-danger" id="demoBtnDanger">حذف</button>
+                  </div>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="inputLabel">ورودی فرم (Input)</div>
+                  <input type="text" class="demo-input" id="demoInput">
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="badgeLabel">نشان (Badge)</div>
+                  <div class="demo-badges">
+                    <span class="demo-badge" id="demoBadge1">جدید</span>
+                    <span class="demo-badge" id="demoBadge2">پرفروش</span>
+                  </div>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="selectLabel">انتخابگر (Select)</div>
+                  <select class="demo-select" id="demoSelect" aria-labelledby="selectLabel">
+                    <option id="demoSelectOpt1">تهران</option><option id="demoSelectOpt2">اصفهان</option><option id="demoSelectOpt3">شیراز</option>
+                  </select>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="controlsLabel">چک‌باکس · رادیو · سوییچ</div>
+                  <div class="demo-controls">
+                    <label class="demo-ctl"><input type="checkbox" class="demo-check" checked><span id="demoCheckLabel">پذیرفتن قوانین</span></label>
+                    <label class="demo-ctl"><input type="radio" name="demoRadio" class="demo-radio" checked><span id="demoRadioLabel1">ماهانه</span></label>
+                    <label class="demo-ctl"><input type="radio" name="demoRadio" class="demo-radio"><span id="demoRadioLabel2">سالانه</span></label>
+                    <label class="demo-ctl"><input type="checkbox" role="switch" class="demo-switch" checked><span id="demoSwitchLabel">اعلان‌ها</span></label>
+                  </div>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="tabsLabel">تب‌ها (Tabs)</div>
+                  <div class="demo-tabs" role="tablist" id="demoTabs" aria-labelledby="tabsLabel">
+                    <button type="button" class="demo-tab" role="tab" id="demoTab1" aria-selected="true">نمای کلی</button>
+                    <button type="button" class="demo-tab" role="tab" id="demoTab2" aria-selected="false" tabindex="-1">تنظیمات</button>
+                    <button type="button" class="demo-tab" role="tab" id="demoTab3" aria-selected="false" tabindex="-1">گزارش‌ها</button>
+                    <button type="button" class="demo-tab" role="tab" id="demoTab4" aria-selected="false" disabled>آرشیو</button>
+                  </div>
+                  <div class="demo-tabpanel" role="tabpanel" id="demoTabPanel" aria-labelledby="demoTab1"></div>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="tableLabel">جدول (Table)</div>
+                  <table class="demo-table" id="demoTable" aria-labelledby="tableLabel"></table>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="toastLabel">اعلان‌ها (Toast)</div>
+                  <div class="demo-toast-stack">
+                    <div class="demo-toast is-info" role="status" id="demoToastInfo"></div>
+                    <div class="demo-toast is-success" role="status" id="demoToastSuccess"></div>
+                    <div class="demo-toast is-warning" role="status" id="demoToastWarning"></div>
+                    <div class="demo-toast is-error" role="alert" id="demoToastError"></div>
+                  </div>
+                </section>
+
+                <section class="demo-block">
+                  <div class="demo-label" id="overlayLabel">Tooltip · Dropdown</div>
+                  <div class="demo-tip-row">
+                    <span class="demo-tooltip" role="tooltip" id="demoTooltip">ذخیره (Ctrl+S)</span>
+                    <button type="button" class="demo-btn demo-btn-secondary" id="demoTipAnchor" aria-describedby="demoTooltip">ذخیره</button>
+                  </div>
+                  <div class="demo-dropdown" role="menu" id="demoDropdown" style="margin-top:14px" aria-labelledby="overlayLabel">
+                    <button type="button" class="demo-dd-item" role="menuitem" id="demoDd1">ویرایش</button>
+                    <button type="button" class="demo-dd-item is-selected" role="menuitemradio" aria-checked="true" id="demoDd2">تکرار</button>
+                    <button type="button" class="demo-dd-item" role="menuitem" id="demoDd3" disabled>اشتراک‌گذاری</button>
+                    <div class="demo-dd-sep" role="separator"></div>
+                    <button type="button" class="demo-dd-item is-danger" role="menuitem" id="demoDd4">حذف</button>
+                  </div>
+                </section>
+
+                <!-- بلوک‌های حالت‌ها: توسط src/ui/states-block.js ساخته می‌شوند -->
+                <section class="demo-block demo-block-wide" id="buttonStatesBlock"></section>
+                <section class="demo-block demo-block-wide" id="inputStatesBlock"></section>
+                <section class="demo-block demo-block-wide" id="controlStatesBlock"></section>
+                <section class="demo-block demo-block-wide" id="widgetStatesBlock"></section>
+
+                <section class="demo-block demo-block-wide">
+                  <div class="demo-label" id="cardLabel">کارت (Card)</div>
+                  <div class="demo-card">
+                    <h4 id="demoCardTitle">عنوان کارت</h4>
+                    <p id="demoCardText">توضیح کوتاه نمونه برای بررسی فاصله‌گذاری، گردی گوشه و سایه‌ی این کارت.</p>
+                    <button class="demo-btn demo-btn-primary demo-btn-sm" id="demoCardBtn">مشاهده</button>
+                  </div>
+                </section>
+
+                <section class="demo-block demo-block-wide">
+                  <div class="demo-label" id="alertLabel">هشدار (Alert)</div>
+                  <div class="demo-alert" id="demoAlert">⚠ این یک پیام هشدار نمونه است.</div>
+                </section>
+
+                <section class="demo-block demo-block-wide">
+                  <div class="demo-label" id="modalLabel">مودال (Modal)</div>
+                  <div class="demo-modal-wrap">
+                    <div class="demo-modal-overlay"></div>
+                    <div class="demo-modal">
+                      <h4 id="demoModalTitle">عنوان مودال</h4>
+                      <p id="demoModalText">این یک پنجره‌ی نمونه است تا سایه، گردی و فاصله‌ی مودال دیده شود.</p>
+                      <button class="demo-btn demo-btn-primary demo-btn-sm" id="demoModalBtn">تایید</button>
+                    </div>
+                  </div>
+                </section>
+
+              </div>
+              <div class="canvas-hint" data-i18n-force>این گالری همه‌ی کامپوننت‌های اصلی را هم‌زمان نشان می‌دهد؛ هر توکنی را در Inspector تغییر دهید، اثرش را همین‌جا ببینید.</div>
+                  </div></div>
+                </div>
+              </div>
+
+              <div class="device-caption" id="deviceCaption" aria-live="polite"></div>
+
+              <!-- نوار کنترل بوم: Zoom + اندازه‌ی Device -->
+              <div class="canvas-controls" role="toolbar" aria-label="کنترل بوم" dir="ltr">
+                <div class="cc-group" role="group" aria-label="زوم">
+                  <button type="button" class="cc-btn cc-icon" data-zoom="out" aria-label="کوچک‌نمایی" title="کوچک‌نمایی (−)">−</button>
+                  <button type="button" class="cc-btn cc-value" data-zoom="reset" id="zoomValue" aria-label="بازگشت به ۱۰۰٪" title="۱۰۰٪ (کلید 1)">100%</button>
+                  <button type="button" class="cc-btn cc-icon" data-zoom="in" aria-label="بزرگ‌نمایی" title="بزرگ‌نمایی (+)">+</button>
+                  <button type="button" class="cc-btn cc-fit" data-zoom="fit" aria-pressed="true" title="جا دادن کل عرض صفحه در بوم (کلید 0)">Fit</button>
+                </div>
+                <span class="cc-sep" aria-hidden="true"></span>
+                <div class="cc-group" role="group" aria-label="اندازه‌ی صفحه">
+                  <button type="button" class="cc-btn cc-device" data-device="mobile" aria-pressed="false" title="Mobile — 390px">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="7" y="2.5" width="10" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg><span>Mobile</span><small>390</small>
+                  </button>
+                  <button type="button" class="cc-btn cc-device" data-device="tablet" aria-pressed="false" title="Tablet — 768px">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="3" width="16" height="18" rx="2.5"/><path d="M11 18h2"/></svg><span>Tablet</span><small>768</small>
+                  </button>
+                  <button type="button" class="cc-btn cc-device" data-device="desktop" aria-pressed="true" title="Desktop — 1440px">
+                    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2.5" y="4" width="19" height="12.5" rx="2"/><path d="M9 20.5h6M12 16.5v4"/></svg><span>Desktop</span><small>1440</small>
+                  </button>
+                </div>
+                <span class="cc-sep" aria-hidden="true"></span>
+                <div class="cc-group" role="group" aria-label="شبیه‌سازی کوررنگی">
+                  <select id="cvdSim" class="cc-select" aria-label="شبیه‌سازی کوررنگی" title="شبیه‌سازی کوررنگی روی بوم">
+                    <option value="none">دید عادی</option>
+                    <option value="protanopia">Protanopia</option>
+                    <option value="deuteranopia">Deuteranopia</option>
+                    <option value="tritanopia">Tritanopia</option>
+                    <option value="achromatopsia">Achromatopsia</option>
+                  </select>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- ---- نوار ابزار آیکنی، ثابت در سمت چپ صفحه (مثل فتوشاپ) ---- -->
+          <aside class="tool-rail" id="toolRail">
+            <!-- دکمه‌های این نوار مستقیم در HTML نوشته نمی‌شوند؛ src/ui/toolbar.js آن‌ها را از
+                 آرایه‌ی RAIL_TOOLS در data/rail-tools.js می‌سازد (buildRailButtons در src/ui/toolbar.js) -->
+          </aside>
+
+        </div>
+      </section>
+
+      <!-- ===================== PANEL 2: COLORS ===================== -->
+      <section class="panel" id="panel-colors">
+        <div class="card">
+          <h3><span class="dot"></span> تولید پالت رنگی</h3>
+          <p class="desc">یک رنگ پایه و یک هارمونی انتخاب کنید (طبق فایل «تئوری رنگ»)؛ رنگ‌های اصلی/ثانویه/تاکیدی (هرکدام با ۳ نسخه)، رنگ‌های معنایی (موفقیت/هشدار/خطا/اطلاعات) و خنثی‌های متن/پس‌زمینه/حاشیه ساخته می‌شوند.</p>
+
+          <div class="color-controls">
+            <div class="color-field">
+              <label>رنگ پایه</label>
+              <input type="color" id="baseColor" value="#0F7C8C">
+            </div>
+            <div class="color-field" style="min-width:200px">
+              <label>نوع هارمونی</label>
+              <select id="harmonySelect">
+                <option value="complementary">مکمل (Complementary)</option>
+                <option value="analogous">همسایه (Analogous)</option>
+                <option value="monochromatic">تک‌رنگ (Monochromatic)</option>
+                <option value="split-complementary">شبه‌مکمل (Split‑Complementary)</option>
+                <option value="triadic">سه‌تایی (Triadic)</option>
+                <option value="tetradic">چهارتایی (Tetradic)</option>
+              </select>
+            </div>
+            <div class="color-field">
+              <label id="colorEngineLabel">موتور تولید رنگ</label>
+              <div class="engine-toggle" id="colorEngineGroup" role="radiogroup" aria-labelledby="colorEngineLabel"></div>
+            </div>
+            <button class="btn btn-primary" id="btnGenerate">تولید پالت</button>
+          </div>
+          <div class="control-note" id="engineNote" style="margin-top:10px;"></div>
+
+          <div style="margin-top:var(--space-4)">
+            <label class="toggle-line"><input type="checkbox" id="applyToApp"> این پالت را روی خود داشبورد هم اعمال کن (فقط برای نمایش زنده‌ی نتیجه)</label>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3><span class="dot"></span> نقش‌های رنگی اصلی</h3>
+          <p class="desc">برای هر نقش، مقدار را دستی هم می‌توانید تغییر دهید و هگز آن را کپی کنید. رنگ «اصلی» همیشه دقیقاً همان رنگ پایه‌ای است که انتخاب کرده‌اید.</p>
+          <div class="role-grid" id="roleGrid"></div>
+        </div>
+
+        <div class="card">
+          <h3><span class="dot"></span> رنگ‌های معنایی (Semantic)</h3>
+          <p class="desc">طبق فایل «تئوری رنگ» — این‌ها همیشه از هیوهای قراردادی صنعت ساخته می‌شوند، نه از رنگ برند، تا با پیام سیستمی (موفقیت/خطا/هشدار) اشتباه گرفته نشوند. در صورت نیاز دستی هم قابل تغییرند.</p>
+          <div class="role-grid" id="semanticGrid"></div>
+        </div>
+
+        <div class="card">
+          <h3><span class="dot"></span> خنثی‌ها (متن، پس‌زمینه، سطح، حاشیه)</h3>
+          <p class="desc">هم‌راستا با رنگ پایه (undertone)؛ همه دستی قابل تغییر و کپی‌شدنی‌اند. این‌ها دقیقاً همان متغیرهایی هستند که در راهنمای نام‌گذاری CSS شما آمده بودند.</p>
+          <div class="neutral-strip" id="neutralStrip"></div>
+        </div>
+
+        <div class="card" id="rampCard">
+          <h3><span class="dot"></span> رمپ ۱۲ پله‌ای (سبک Radix)</h3>
+          <p class="desc">برای هر نقش ۱۲ پله با کاربرد مشخص (پس‌زمینه، مرز، رنگ توپر، متن). پلهٔ ۹ همان رنگ پایه است و پله‌های ۱۱ و ۱۲ روی پلهٔ ۲ حداقل ۴٫۵:۱ و ۷:۱ دارند. برای خروجی، در پنل Export گزینهٔ «رمپ رنگ» را روشن کنید.</p>
+          <div class="ramp-tabs" role="tablist" aria-label="تم رمپ">
+            <button type="button" class="imp-tab active" data-ramp-theme="light" role="tab">روشن</button>
+            <button type="button" class="imp-tab" data-ramp-theme="dark" role="tab">تیره</button>
+          </div>
+          <div id="rampGrid" class="ramp-grid" dir="ltr"></div>
+        </div>
+
+        <div class="card" id="extractCard">
+          <h3><span class="dot"></span> استخراج پالت از تصویر</h3>
+          <p class="desc">یک تصویر (لوگو، عکس برند) بدهید؛ رنگ‌های غالب پیدا می‌شود و با یک کلیک به‌عنوان رنگ پایه گذاشته می‌شود. تصویر فقط داخل مرورگر پردازش می‌شود و جایی فرستاده نمی‌شود.</p>
+          <label class="btn btn-ghost prj-file">انتخاب تصویر…<input type="file" id="extractFile" hidden accept="image/png,image/jpeg,image/webp,image/gif,image/svg+xml"></label>
+          <div id="extractOut" class="extract-out" aria-live="polite"></div>
+        </div>
+
+        <div class="card" id="contrastCard">
+          <h3><span class="dot"></span> بررسی کنتراست (WCAG 2.x)</h3>
+          <p class="desc">هر ترکیب متن/پس‌زمینه و مرز/پس‌زمینه‌ای که کامپوننت‌های بوم واقعاً می‌سازند (با احتساب تغییرات «قطعات»). حداقل‌ها: متن عادی ۴٫۵:۱ (AA) و ۷:۱ (AAA)، متن درشت و اجزای رابط ۳:۱. نسبت‌ها هرگز رو به بالا گرد نمی‌شوند.</p>
+          <label class="toggle-line apca-line"><input type="checkbox" id="apcaToggle"> نمایش APCA (Lc) کنار WCAG — پیش‌نویس WCAG 3؛ استاندارد الزام‌آور نیست</label>
+          <div class="contrast-summary" id="contrastSummary"></div>
+          <div class="contrast-table" id="contrastPairs"></div>
+        </div>
+      </section>
+
+      <!-- ===================== PANEL 3: EXPORT (placeholder) ===================== -->
+      <section class="panel" id="panel-export">
+        <div class="card">
+          <h3><span class="dot"></span> خروجی توکن‌ها <button type="button" class="btn btn-ghost" id="btnOpenImport" style="margin-inline-start:auto" title="ورود توکن‌ها از فایل یا متن">⇪ ورود (Import)</button></h3>
+          <p class="desc">این خروجی از همان موتوری ساخته می‌شود که بوم پیش‌نمایش را می‌سازد. قالب، نام‌گذاری، پیشوند پروژه و محدوده را تنظیم کنید؛ پیش‌نمایش پایین هم‌زمان عوض می‌شود. نام‌گذاری فقط روی خروجی اثر دارد؛ نام‌های داخلی ابزار تغییر نمی‌کنند.</p>
+
+          <div class="export-grid">
+            <div class="export-section">
+              <h4>قالب (Format)</h4>
+              <div class="engine-toggle" id="exportFormatGroup" role="radiogroup" aria-label="قالب خروجی"></div>
+              <div class="control-note" id="exportFormatNote"></div>
+              <div id="exportOptions" class="export-options"></div>
+
+              <div id="prefixBlock">
+              <h4 style="margin-top:var(--space-4)">پیشوند پروژه / شرکت</h4>
+              <input type="text" id="prefixInput" class="export-input" dir="ltr" placeholder="مثلاً acme" autocomplete="off" spellcheck="false">
+              <div class="control-note" id="prefixNote"></div>
+              </div>
+            </div>
+
+            <div class="export-section" id="namingSection">
+              <h4>نام‌گذاری (Naming)</h4>
+              <div class="color-field" style="margin-bottom:var(--space-3)">
+                <label for="namingPreset">الگوی آماده</label>
+                <select id="namingPreset" class="export-input"></select>
+              </div>
+              <div id="namingCategories"></div>
+            </div>
+
+            <div class="export-section" id="scopeSection">
+              <h4>محدوده (Scope)</h4>
+              <div class="scope-grid" id="exportScope"></div>
+              <div class="scope-actions"><button type="button" class="link-btn" id="scopeAll">همه</button> · <button type="button" class="link-btn" id="scopeNone">هیچ‌کدام</button></div>
+              <label class="check-row"><input type="checkbox" id="exportComments"> <span>شامل کامنت‌ها (هدر و عنوان گروه‌ها)</span></label>
+            </div>
+          </div>
+
+          <div class="export-summary" id="exportSummary"></div>
+          <div class="export-warning" id="exportWarning" role="alert" hidden></div>
+
+          <div class="export-files" id="exportFiles" role="tablist" aria-label="فایل‌های خروجی" hidden></div>
+          <pre class="export-preview" id="exportPreview" data-i18n-skip></pre>
+
+          <div class="row" style="margin-top:var(--space-4)">
+            <button class="btn btn-primary" id="btnCopyFull">کپی</button>
+            <button class="btn btn-ghost" id="btnCopyVarsOnly">کپی فقط متغیرها</button>
+            <button class="btn btn-ghost" id="btnDownload">دانلود فایل</button>
+            <button class="btn btn-ghost" id="btnDownloadZip" hidden>دانلود همه (zip)</button>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===================== PANEL 4: PREVIEW (placeholder) ===================== -->
+      <section class="panel" id="panel-project">
+        <div class="card" data-edit-only>
+          <h3><span class="dot"></span> فایل پروژه</h3>
+          <p class="desc">کل پروژه (سبک، پالت، تنظیمات) را در یک فایل ذخیره کنید یا فایل قبلی را باز کنید. باز کردن یک مرحلهٔ Undo است.</p>
+          <div class="prj-actions">
+            <button type="button" class="btn btn-primary" id="btnSaveProject">ذخیرهٔ فایل پروژه</button>
+            <label class="btn btn-ghost prj-file">باز کردن فایل پروژه…<input type="file" id="projectFile" hidden accept=".json,application/json"></label>
+          </div>
+          <div id="projectMsg" class="prj-msg" aria-live="polite"></div>
+        </div>
+        <div class="card">
+          <h3><span class="dot"></span> نسخه‌ها</h3>
+          <p class="desc">هر نسخه یک عکس کامل از پروژه است. Ctrl+S هم در صورت تغییر یک نسخهٔ خودکار می‌سازد.</p>
+          <div class="prj-actions" data-edit-only>
+            <input type="text" id="verLabel" class="export-input" maxlength="80" aria-label="برچسب نسخه" placeholder="برچسب نسخه (اختیاری)">
+            <button type="button" class="btn btn-primary" id="btnSaveVersion">ثبت نسخه</button>
+          </div>
+          <div id="verNote" class="prj-msg"></div>
+          <div id="verList" class="prj-list"></div>
+          <div class="prj-actions"><button type="button" class="btn btn-ghost" id="btnCompareSel" disabled>مقایسهٔ دو نسخهٔ انتخاب‌شده</button></div>
+          <div id="verDiff" class="prj-diff"></div>
+        </div>
+        <div class="card">
+          <h3><span class="dot"></span> لینک اشتراک</h3>
+          <p class="desc">لینکی که پروژه را به‌صورت فقط‌خواندنی نشان می‌دهد. داده داخل خود لینک است و به هیچ سرور نمی‌رود.</p>
+          <div class="prj-actions">
+            <button type="button" class="btn btn-primary" id="btnShare">ساخت لینک</button>
+            <button type="button" class="btn btn-ghost" id="btnCopyShare" disabled>کپی لینک</button>
+          </div>
+          <input type="text" id="shareOut" class="export-input" dir="ltr" readonly aria-label="لینک اشتراک" hidden>
+          <div id="shareNote" class="prj-msg" aria-live="polite"></div>
+        </div>
+        <div class="card">
+          <h3><span class="dot"></span> تحویل به مشتری و گزارش دسترس‌پذیری</h3>
+          <p class="desc">صفحهٔ HTML مستقل (بدون اینترنت): پالت، تایپوگرافی، اجزا با حالت‌ها، کنتراست و دانلود توکن‌ها. نام و لوگوی شما در سربرگ می‌آید.</p>
+          <div class="prj-grid">
+            <label class="prj-field">نام آژانس / طراح<input type="text" id="agencyName" class="export-input" maxlength="60"></label>
+            <label class="prj-field">لوگو (PNG، JPG، SVG؛ حداکثر ۲۰۰ کیلوبایت)<input type="file" id="agencyLogo" class="export-input" accept="image/png,image/jpeg,image/svg+xml,image/webp"></label>
+            <label class="prj-field">زبان صفحه<select id="handoffLang" class="export-input"><option value="fa">فارسی</option><option value="en">English</option></select></label>
+          </div>
+          <div id="agencyPreview" class="prj-msg"></div>
+          <div class="prj-actions">
+            <button type="button" class="btn btn-primary" id="btnHandoff">دانلود صفحهٔ تحویل</button>
+            <button type="button" class="btn btn-ghost" id="btnA11y">دانلود گزارش دسترس‌پذیری</button>
+          </div>
+        </div>
+      </section>
+
+      <section class="panel" id="panel-preview">
+        <div class="placeholder-card">
+          <div class="icn">🖥️</div>
+          <h3>پیش‌نمایش زنده سایت — به‌زودی</h3>
+          <p>این بخش یک صفحه‌ی نمونه (هدر، Hero، کارت‌ها، فوتر) را نمایش می‌دهد که همزمان با تغییر تنظیمات در بخش «سبک‌ها» و «رنگ‌بندی»، به‌صورت زنده به‌روزرسانی می‌شود.</p>
+        </div>
+      </section>
+
+    </div>
+  </main>
+</div>
+
+<div class="toast" id="toast"></div>
+
+</body>
+</html>
